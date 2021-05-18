@@ -13,3 +13,19 @@
 </table>
 
 <router-outlet></router-outlet>
+<hr />
+<!-- Quand l'utilisateur est connecté -->
+<div *ngIf="authService.user | async">
+  <h1>Welcome User: {{ (authService.user | async)?.email }}</h1>
+
+  <button (click)="logout()">Logout</button>
+</div>
+
+<!-- Quand l'utilisateur est déconnecté -->
+<div *ngIf="!(authService.user | async)">
+  <input type="text" [(ngModel)]="email" placeholder="Your email" />
+  <input type="password" [(ngModel)]="password" placeholder="Your password" />
+
+  <button (click)="signup()" [disabled]="!email || !password">Sign up</button>
+  <button (click)="login()" [disabled]="!email || !password">Login</button>
+</div>
